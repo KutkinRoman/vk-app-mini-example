@@ -1,11 +1,35 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-
 import {Avatar, Button, Cell, Div, Group, Header, Panel, PanelHeader, Text} from '@vkontakte/vkui';
 import CustomText from "../components/CustomText";
 import CustomTabbar from "../components/CustomTabbar";
+import axios from "axios";
+
+const API = axios.create({
+    baseURL: 'http://194.67.105.103/api/v1'
+})
+
+API.interceptors.request.use(function (config) {
+
+    console.log('axios.interceptors.request', config)
+
+    return config;
+}, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+});
 
 const Home = ({id, go, fetchedUser}) => {
+
+    const test = async () => {
+      const response = await API.get('/')
+       console.log(response)
+    }
+
+    useEffect(() => {
+        test()
+    }, [])
+
     return (
         <Panel id={id}>
             <PanelHeader>HOME PAGE</PanelHeader>
